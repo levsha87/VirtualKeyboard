@@ -58,7 +58,7 @@
     max-width: 500px;
 }
 
-.keyboard__key--activable::after {
+.keyboard__key--activatable::after {
     content: '';
     top: 10px;
     right: 10px;
