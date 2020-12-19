@@ -42,55 +42,10 @@ const Keyboard = {
   _createKeys() {
     const fragment = document.createDocumentFragment();
     const keyLayout = [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '0',
-      'backspace',
-      'q',
-      'w',
-      'e',
-      'r',
-      't',
-      'y',
-      'u',
-      'i',
-      'o',
-      'p',
-      '[',
-      ']',
-      'caps',
-      'a',
-      's',
-      'd',
-      'f',
-      'g',
-      'h',
-      'j',
-      'k',
-      'l',
-      ';',
-      "'",
-      '/',
-      'enter',
-      'done',
-      'z',
-      'x',
-      'c',
-      'v',
-      'b',
-      'n',
-      'm',
-      ',',
-      '.',
-      '?',
-      'space',
+      '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'backspace',
+      'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']',
+      'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", '/', 'enter',
+      'done', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', 'space',
     ];
 
     const createIconHTML = (icon_name) => {
@@ -111,10 +66,7 @@ const Keyboard = {
           keyElement.innerHTML = createIconHTML('backspace');
 
           keyElement.addEventListener('click', () => {
-            this.properties.value = this.properties.value.substring(
-              0,
-              this.properties.value.length - 1
-            );
+            this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
             this._triggerEvent('oninput');
           });
 
