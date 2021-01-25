@@ -30,13 +30,11 @@ const Keyboard = {
     this.elements.main.appendChild(this.elements.keysContainer);
     document.body.appendChild(this.elements.main);
 
-    document.querySelectorAll('.use-keyboard-input').forEach((element) => {
-      element.addEventListener('focus', () => {
-        this.open(element.value, (currentValue) => {
-          element.value = currentValue;
+    document.querySelector('.use-keyboard-input').addEventListener('focus', (e) => {
+        this.open(e.target.value, (currentValue) => {
+          e.target.value = currentValue;
         });
       });
-    });
   },
 
   _createKeys() {
