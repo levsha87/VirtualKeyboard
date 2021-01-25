@@ -3,6 +3,7 @@ const Keyboard = {
     main: null,
     keysContainer: null,
     keys: [],
+    screenInput: null,
   },
 
   eventHandlers: {
@@ -18,6 +19,7 @@ const Keyboard = {
   init() {
     this.elements.main = document.createElement('div');
     this.elements.keysContainer = document.createElement('div');
+    this.elements.screenInput = document.querySelector('.use-keyboard-input');
 
     this.elements.main.classList.add('keyboard', 'keyboard--hidden');
     this.elements.keysContainer.classList.add('keyboard__keys');
@@ -30,7 +32,7 @@ const Keyboard = {
     this.elements.main.appendChild(this.elements.keysContainer);
     document.body.appendChild(this.elements.main);
 
-    document.querySelector('.use-keyboard-input').addEventListener('focus', (e) => {
+    this.elements.screenInput.addEventListener('focus', (e) => {
         this.open(e.target.value, (currentValue) => {
           e.target.value = currentValue;
         });
@@ -46,14 +48,15 @@ const Keyboard = {
       'done', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', 'space',
     ];
 
+    const insertLineBreak = ['backspace', ']', 'enter', '?'];
+
     const createIconHTML = (icon_name) => {
       return `<i class='material-icons'>${icon_name}</i>`;
     };
 
     keyLayout.forEach(key => {
       const keyElement = document.createElement('button');
-      const insertLineBreak =
-        ['backspace', ']', 'enter', '?'].indexOf(key) !== -1;
+     
 
       keyElement.setAttribute('type', 'button');
       keyElement.classList.add('keyboard__key');
@@ -137,7 +140,7 @@ const Keyboard = {
 
       fragment.appendChild(keyElement);
 
-      if (insertLineBreak) {
+      if (insertLineBreak.includes(key)) {
         fragment.appendChild(document.createElement('br'));
       }
     });
