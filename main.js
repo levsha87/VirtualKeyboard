@@ -1,3 +1,19 @@
+const BACKSPACE = 'backspace';
+const CAPS = 'caps';
+const ENTER = 'enter';
+const SPACE = 'space';
+const DONE = 'done';
+
+const KEY_LAYOUT = [
+  '1',  '2',  '3',  '4',  '5',  '6',  '7',  '8',  '9',  '0',  BACKSPACE,
+  'q',  'w',  'e',  'r',  't',  'y',  'u',  'i',  'o',  'p',  '[',  ']',
+  CAPS,  'a',  's',  'd',  'f',  'g',  'h',  'j',  'k',  'l',  ';',  "'",  '/',  ENTER,
+  DONE,  'z',  'x',  'c',  'v',  'b',  'n',  'm',  ',',  '.',  '?',  SPACE,];
+
+const INSERT_LINE_BREAK = [BACKSPACE, ']', ENTER, '?'];
+
+
+
 const Keyboard = {
   elements: {
     main: null,
@@ -33,47 +49,41 @@ const Keyboard = {
     document.body.appendChild(this.elements.main);
 
     this.elements.screenInput.addEventListener('focus', (e) => {
-        this.open(e.target.value, (currentValue) => {
-          e.target.value = currentValue;
-        });
+      this.open(e.target.value, (currentValue) => {
+        e.target.value = currentValue;
       });
+    });
   },
 
   _createKeys() {
     const fragment = document.createDocumentFragment();
-    const keyLayout = [
-      '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'backspace',
-      'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']',
-      'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", '/', 'enter',
-      'done', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', 'space',
-    ];
-
-    const insertLineBreak = ['backspace', ']', 'enter', '?'];
 
     const createIconHTML = (icon_name) => {
       return `<i class='material-icons'>${icon_name}</i>`;
     };
 
-    keyLayout.forEach(key => {
+    KEY_LAYOUT.forEach((key) => {
       const keyElement = document.createElement('button');
-     
 
       keyElement.setAttribute('type', 'button');
       keyElement.classList.add('keyboard__key');
 
       switch (key) {
-        case 'backspace':
+        case BACKSPACE:
           keyElement.classList.add('keyboard__key--wide');
-          keyElement.innerHTML = createIconHTML('backspace');
+          keyElement.innerHTML = createIconHTML(BACKSPACE);
 
           keyElement.addEventListener('click', () => {
-            this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+            this.properties.value = this.properties.value.substring(
+              0,
+              this.properties.value.length - 1
+            );
             this._triggerEvent('oninput');
           });
 
           break;
 
-        case 'caps':
+        case CAPS:
           keyElement.classList.add(
             'keyboard_key--wide',
             'keyboard__key--activatable'
@@ -90,7 +100,7 @@ const Keyboard = {
 
           break;
 
-        case 'enter':
+        case ENTER:
           keyElement.classList.add('keyboard__key--wide');
           keyElement.innerHTML = createIconHTML('keyboard_return');
 
@@ -101,7 +111,7 @@ const Keyboard = {
 
           break;
 
-        case 'space':
+        case SPACE:
           keyElement.classList.add('keyboard__key--extra-wide');
           keyElement.innerHTML = createIconHTML('space_bar');
 
@@ -112,7 +122,7 @@ const Keyboard = {
 
           break;
 
-        case 'done':
+        case DONE:
           keyElement.classList.add(
             'keyboard__key--wide',
             'keyboard__key--dark'
@@ -130,8 +140,7 @@ const Keyboard = {
           keyElement.textContent = key.toLowerCase();
 
           keyElement.addEventListener('click', () => {
-            this.properties.value += this.properties.capsLock ? key.toUpperCase()
-              : key.toLowerCase();
+            this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
             this._triggerEvent('oninput');
           });
 
@@ -140,7 +149,7 @@ const Keyboard = {
 
       fragment.appendChild(keyElement);
 
-      if (insertLineBreak.includes(key)) {
+      if (INSERT_LINE_BREAK.includes(key)) {
         fragment.appendChild(document.createElement('br'));
       }
     });
@@ -158,8 +167,7 @@ const Keyboard = {
 
     for (const key of this.elements.keys) {
       if (key.childElementCount === 0) {
-        key.textContent = this.properties.capsLock ? key.textContent.toUpperCase()
-          : key.textContent.toLowerCase();
+        key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
       }
     }
   },
